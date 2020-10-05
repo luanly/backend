@@ -1,0 +1,38 @@
+{
+	"Routes": [
+		{
+			"DownstreamPathTemplate": "/api/v1.0/User/{userId}",
+			"DownstreamScheme": "https",
+			"DownstreamHostandPorts": [
+				{
+					"Host": "localhost",
+					"Port": "44334"
+				}
+			],
+			"UpstreamPathTemplate": "/User/{userId}",
+			"Key": "User",
+			"UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+			"LoadBalancerOptions": {
+				"Type": "RoundRobin"
+			},
+			"AuthenticationOptions": {
+				"AuthenticationProviderKey": "TestKey",
+				"AllowedScopes": [ "api", "video" ]
+			},
+			"RateLimitOptions": {
+				"EnableRateLimiting": true, // Is Current Limiting Enabled
+				"Period": "1s", // Statistics period: 1 s, 5m, 1h, 1d
+				"PeriodTimespan": 15, // How many seconds before the client can try again
+				"Limit": 5 // Maximum number of requests allowed in statistical time period
+			},
+			"FileCacheOptions": {
+				"TtlSeconds": 15,
+				"Region": "usercaching"
+			}
+		}
+	],
+	"GlobalConfiguration": {
+		"BaseUrl": "https://localhost:44335",
+		"RequestIdKey": "OcRequestId"
+	}
+}
